@@ -31,7 +31,13 @@ app.post("/repositories", (request, response) => {
 
 app.put("/repositories/:id", (request, response) => {
   const { id } = request.params;
-  const updatedRepository = request.body;
+  const { title, url, techs } = request.body;
+
+  const updatedRepository = {
+    title,
+    url,
+    techs
+  }
 
   repositoryIndex = repositories.findIndex(repository => repository.id === id);
 
@@ -79,7 +85,7 @@ app.post("/repositories/:id/like", (request, response) => {
 
   const likes = ++repositories[repositoryIndex].likes;
 
-  return response.json({likes});
+  return response.json({likes}).send();
 });
 
 module.exports = app;
